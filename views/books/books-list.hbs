@@ -18,7 +18,7 @@
 
         {{#each books as |book|}}
           <div class="card col-md-3" style="width: 18rem;"> <!--Cambiar esto para la imagen otro estilo-->
-            <img src="{{book.image}}" class="card-img-top image" alt="book">
+            <img src="{{book.imagePath}}" class="card-img-top img-responsive" alt="{{book.name}}">
             <div class="card-body">
               <h5 class="card-title">{{book.name}}</h5>
               <h6 class="card-subtitle mb-2 text-muted">{{book.category.dataValues.name}}</h6>

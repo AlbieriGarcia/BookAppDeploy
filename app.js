@@ -6,6 +6,8 @@ const Books = require("./models/Books");
 const Categories = require("./models/Categories");
 const Authors = require("./models/Authors");
 const Editorials = require("./models/Editorials");
+const multer = require("multer");
+const {v4: uuidv4} = require("uuid");
 
 const errorController = require("./controllers/ErrorController");
 
@@ -30,7 +32,20 @@ app.set("views", "views");
 
 app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public"))); // folder static
+app.use("/images",express.static(path.join(__dirname, "images")));
+
+
+const imageStorage = multer.diskStorage({
+    destination: (req,file,cb) =>{
+        cb(null,"images");
+    },
+    filename: (req,file,cb) =>{
+        cb(null,`${uuidv4()}-${file.originalname}`);
+    }
+})
+
+app.use(multer({storage: imageStorage}).single("Image"));
 
 const booksRouter = require("./routes/books");
 const categoriesRouter = require("./routes/categories");

@@ -1,4 +1,6 @@
 const Authors = require("../models/Authors");
+const Books = require("../models/Books");
+const transporter = require("../services/EmailServices");
 
 exports.GetAuthorsList = (req, res, next) => {
   Authors.findAll()
@@ -29,11 +31,21 @@ exports.GetCreateAuthors = (req, res, next) => {
 
 exports.PostCreateAuthors = (req, res, next) => {
   const authorName = req.body.Name;
-  const email = req.body.Email;
+  const authorEmail = req.body.Email;
 
-  Authors.create({ name: authorName, email: email})
+  Authors.create({ name: authorName, email: authorEmail})
     .then((result) => {
       res.redirect("/authors");
+      return transporter.sendMail({
+        from: "Notificación Autores",
+        to: authorEmail,
+        subject: `Welcome ${authorName}`,
+        html: "</strong>Te has registrado como autor correctamente</strong>",
+
+
+      }, (err)=>{
+        console.log(err);
+      })
     })
     .catch((err) => {
       console.log(err);
@@ -73,10 +85,10 @@ exports.GetEditAuthors = (req, res, next) => {
 
 exports.PostEditAuthors = (req, res, next) => {
     const authorName = req.body.Name;
-    const email = req.body.Email;
+    const authorEmail = req.body.Email;
     const authorId = req.body.authorId ;
 
-    Authors.update({name: authorName, email: email}, {where: {id: authorId }})
+    Authors.update({name: authorName, email: authorEmail}, {where: {id: authorId }})
     .then((result) => {
 
         return res.redirect("/authors");

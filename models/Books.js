@@ -13,9 +13,9 @@ const Books = sequelize.define("book", {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    image: {
+    imagePath: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     pubDate: {
         type: Sequelize.STRING,
