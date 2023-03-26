@@ -1,0 +1,112 @@
+<div class="container">
+    <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>
+
+    {{#if hasCategories}}
+
+    {{#if hasAuthors}}
+
+    {{#if hasEditorials}}
+
+
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            {{#if editMode}}Editar{{else}}Crear{{/if}} libro
+        </div>
+        <div class="card-body">
+
+            <form class="needs-validation" novalidate method="POST" action="{{#if editMode}}/edit-books{{else}}/create-books{{/if}}">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="Name" required value="{{#if editMode}}{{book.name}}{{/if}}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="image" class="form-label">Imagen Url:</label>
+                    <input type="text" class="form-control" id="image" name="ImageUrl" required value="{{#if editMode}}{{book.image}}{{/if}}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="pubDate" class="form-label">Fecha de publicación</label>
+                    <input type="date" class="form-control" id="pubDate" name="PubDate" required value="{{#if editMode}}{{book.pubDate}}{{/if}}">
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="categories" class="form-label">Categorias</label>
+                    <select class="form-select" id="categories" name="Categories" required> 
+                        <option {{#if editMode}}{{else}}selected value=""{{/if}}>Seleccione una categoria</option>
+                        
+                        {{#each categories as |category|}}
+                            {{#if (equalValue category.id ../book.categoryId)}}
+                                <option selected value="{{category.id}}">{{category.name}}</option>
+                            {{else}}
+                                <option value="{{category.id}}">{{category.name}}</option>
+                            {{/if}}
+                        {{/each}}
+
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="authors" class="form-label">Autor</label>
+                    <select class="form-select" id="authors" name="Authors" required> 
+                        <option {{#if editMode}}{{else}}selected value=""{{/if}}>Seleccione un autor</option>
+                        
+                        {{#each authors as |author|}}
+                            {{#if (equalValue author.id ../book.authorId)}}
+                                <option selected value="{{author.id}}">{{author.name}}</option>
+                            {{else}}
+                                <option value="{{author.id}}">{{author.name}}</option>
+                            {{/if}}
+                        {{/each}}
+
+                    </select>
+                </div>
+
+                 <div class="mb-3">
+                    <label for="editorials" class="form-label">Editorial</label>
+                    <select class="form-select" id="editorials" name="Editorials" required> 
+                        <option {{#if editMode}}{{else}}selected value=""{{/if}}>Seleccione una editorial</option>
+                        
+                        {{#each editorials as |editorial|}}
+                            {{#if (equalValue editorial.id ../book.editorialId)}}
+                                <option selected value="{{editorial.id}}">{{editorial.name}}</option>
+                            {{else}}
+                                <option value="{{editorial.id}}">{{editorial.name}}</option>
+                            {{/if}}
+                        {{/each}}
+
+                    </select>
+                </div>
+
+                {{#if editMode}}
+                    <input type="hidden" name="bookId" value="{{book.id}}"> <!-- el aqui tiene el id en singular ojo-->
+                {{/if}}
+
+
+
+                <a href="/" type="button" class="btn btn-primary">Volver</a>
+                <button type="submit" class="btn btn-success btn-crear-validations">{{#if editMode}}Editar{{else}}Crear{{/if}}</button>
+            </form>
+
+        </div>
+    </div>
+
+    {{else}}
+        <h1>No hay editoriales creadas</h1>
+    {{/if}}
+
+    {{else}}
+        <h1>No hay autores creados</h1>
+    {{/if}}
+
+    {{else}}
+        <h1>No hay categorias creadas</h1>
+    {{/if}}
+
+    <div class="col-md-4"></div>
+</div>
+</div>
+

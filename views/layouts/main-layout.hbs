@@ -1,0 +1,72 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/style/style.css">
+    <title>{{pageTitle}}</title>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">BookApp</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link {{#if homeActive}}active{{/if}}" aria-current="page" href="/">Books</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{#if categoriesActive}}active{{/if}}" href="/categories">Categories</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{#if authorsActive}}active{{/if}}" href="/authors">Authors</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{#if editorialsActive}}active{{/if}}" href="/editorials">Editorials</a>
+            </li>
+          </ul>
+          <form class="d-flex align-items-center" action="/search" method="POST">
+            <input class="form-control me-2" name="Search" type="search" placeholder="Buscar por nombre" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+          </form>
+        </div>
+    </nav>
+
+    
+
+    <main>
+
+      {{{body}}}
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="/assets/js/bootstrap/bootstrap.js"></script>
+
+      <script
+    src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+    crossorigin="anonymous"></script>
+
+    <script src="/assets/js/index/index.js"></script>
+
+
+   
+  </body>
+
+</html>

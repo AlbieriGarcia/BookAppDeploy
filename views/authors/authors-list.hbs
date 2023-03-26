@@ -1,0 +1,40 @@
+<section class="py-5 text-center container">
+  <div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light">Book App</h1>
+        <a href="/create-authors" class="btn btn-primary my-2">Crear nuevo autor</a>
+    </div>
+  </div>
+</section>
+
+<div class="album py-5 bg-light">
+  <div>
+
+
+    <div class="row justify-content-center">
+
+      {{#if hasAuthors}}
+
+        {{#each authors as |author|}}
+
+          <div class="card col-md-3" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">{{author.name}}</h5>
+                  <p class="card-text">{{author.email}}</p>
+                  <a href="/edit-authors/{{author.id}}?edit=true"class="btn btn-warning">Editar</a>
+
+                  <form class="form-delete-author form-inline" action="/delete-authors" method="POST" data-author-name="{{author.name}}">
+                      <input type="hidden" name="authorId" value="{{author.id}}">
+                      <button type="submit" class="btn btn-danger">Eliminar</button>
+                  </form>
+                </div>
+          </div>
+      {{/each}}
+
+      {{else}}
+      <h1>No hay autores creados</h1>
+      {{/if}}
+
+    </div>
+  </div>
+</div>

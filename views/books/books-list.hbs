@@ -1,0 +1,44 @@
+<section class="py-5 text-center container">
+  <div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light">Books App</h1>
+        <a href="/create-books" class="btn btn-primary my-2">Crear nuevo libro</a>
+    </div>
+  </div>
+</section>
+
+
+<div class="album py-1 bg-light ">
+  <div >
+
+    <div class="row justify-content-center">
+
+      {{#if hasBooks}}
+
+
+        {{#each books as |book|}}
+          <div class="card col-md-3" style="width: 18rem;"> <!--Cambiar esto para la imagen otro estilo-->
+            <img src="{{book.image}}" class="card-img-top image" alt="book">
+            <div class="card-body">
+              <h5 class="card-title">{{book.name}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{book.category.dataValues.name}}</h6>
+              <h6 class="card-subtitle">{{book.pubDate}}</h6>
+              <p class="card-text">{{book.author.dataValues.name}}</p>
+              <p class="card-text">{{book.editorial.dataValues.name}}</p>
+              <a href="/edit-books/{{book.id}}?edit=true" class="btn btn-warning">Editar</a>
+              <form class="form-delete-book form-inline" action="/delete-books" method="post" data-book-name="{{book.name}}">
+                <input type="hidden" name="bookId" value="{{book.id}}">
+                <button type="submit" class="btn btn-danger ">Eliminar</button>
+              </form>
+            </div>
+          </div>
+        {{/each}}
+
+
+      {{else}}
+      <h1>No hay libros creados</h1>
+      {{/if}}
+
+    </div>
+  </div>
+</div>

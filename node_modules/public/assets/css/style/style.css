@@ -1,0 +1,19 @@
+.form-inline {
+    display: inline;
+}
+.image {
+    max-width: 280px;
+    max-height: 280px;
+
+    min-width: 280px;
+    min-height: 280px;
+}
+
+.input-error {
+    border-color: red;
+    border-width: medium;
+}
+.input-success {
+    border-color: #28501e;
+    border-width: medium;
+}

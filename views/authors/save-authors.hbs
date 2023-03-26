@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>
+
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            {{#if editMode}}Editar{{else}}Crear{{/if}} autor
+        </div>
+        <div class="card-body">
+
+            <form class="needs-validation" novalidate method="POST" action="{{#if editMode}}/edit-authors{{else}}/create-authors{{/if}}">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="Name" required value="{{#if editMode}}{{author.name}}{{/if}}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="email" name="Email" required value="{{#if editMode}}{{author.email}}{{/if}}">
+                 </div>
+
+                {{#if editMode}}
+                    <input type="hidden" name="authorId" value="{{author.id}}"> <!-- el aqui tiene el id en singular ojo-->
+                {{/if}}
+
+
+                <a href="/authors" type="button" class="btn btn-primary">Volver</a>
+                <button type="submit" class="btn btn-success btn-crear-validations">{{#if editMode}}Editar{{else}}Crear{{/if}}</button>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="col-md-4"></div>
+</div>
+
+
+</div>
