@@ -10,12 +10,17 @@ exports.GetBooksList = (req, res, next) => {
   })
     .then((result) => {
       const books = result.map((result) => result.dataValues);
+        Categories.findAll()
+        .then((result) => {
+          const categories = result.map((result) => result.dataValues);
 
-      res.render("books/books-list", {
-        pageTitle: "books",
-        homeActive: true,
-        books: books,
-        hasBooks: books.length > 0,
+        res.render("books/books-list", {
+          pageTitle: "books",
+          homeActive: true,
+          books: books,
+          categories: categories,
+          hasBooks: books.length > 0,
+        });
       });
     })
     .catch((err) => {

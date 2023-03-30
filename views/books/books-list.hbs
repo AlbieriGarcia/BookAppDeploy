@@ -7,17 +7,24 @@
   </div>
 </section>
 
+<div class="books-container">
+  {{#if hasBooks}}
+    <div class="category-list">
+      <a href="#" class="category-item" category="all">Todo</a>
+      {{#each categories as |category|}}
+          <a href="#" class="category-item" category="{{category.name}}">{{category.name}}</a>
+      {{/each}}    
+    </div>    
+  {{/if}}
 
-<div class="album py-1 bg-light ">
-  <div >
-
-    <div class="row justify-content-center">
+<div class="album py-1 books-list">
+    <div class="row">
 
       {{#if hasBooks}}
 
 
         {{#each books as |book|}}
-          <div class="card col-md-3" style="width: 18rem;"> <!--Cambiar esto para la imagen otro estilo-->
+          <div class="card col-md-3 book-item" category="{{book.category.dataValues.name}}"> 
             <img src="{{book.imagePath}}" class="card-img-top img-responsive" alt="{{book.name}}">
             <div class="card-body">
               <h5 class="card-title">{{book.name}}</h5>
@@ -40,5 +47,5 @@
       {{/if}}
 
     </div>
-  </div>
+</div>
 </div>

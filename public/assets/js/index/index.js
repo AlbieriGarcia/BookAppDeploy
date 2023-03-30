@@ -1,5 +1,25 @@
 $(document).ready(function(){
 
+  $(".category-item").on("click",function(){
+      var catBook = $(this).attr('category');
+      console.log(catBook);
+
+      // ocultar libros
+
+      $('.book-item').hide();
+
+      // mostrar categoria seleccionada
+
+      $('.book-item[category="'+catBook+'"]').show();
+  })
+
+  // mostrar todos
+
+  $(".category-item[category='all']").on("click",function(){
+    $('.book-item').show();
+  })
+
+  
   // Alertas de eliminación de elementos usando sweetalert2
 
   $(".form-delete-author").on('submit', function(e){
