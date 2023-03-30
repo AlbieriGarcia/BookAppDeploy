@@ -16,8 +16,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="description" class="form-label">Descripción:</label>
-                    <input type="text" class="form-control" id="description" name="Description" required value="{{#if editMode}}{{editorial.description}}{{/if}}">
+                    <label for="telefono" class="form-label">Teléfono:</label>
+                    <input type="text" class="form-control" id="telefono" name="Telefono" required value="{{#if editMode}}{{editorial.telefono}}{{/if}}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="pais" class="form-label">Pais:</label>
+                    <input type="text" class="form-control" id="pais" name="Pais" required value="{{#if editMode}}{{editorial.pais}}{{/if}}">
                 </div>
 
                 {{#if editMode}}

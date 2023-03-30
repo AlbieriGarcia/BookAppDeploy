@@ -13,10 +13,14 @@ const Editorials = sequelize.define("editorial", {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    description: {
+    telefono: {
         type: Sequelize.STRING,
         allowNull: false,
-    },   
+    },
+    pais: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },     
 });
 
 module.exports = Editorials;

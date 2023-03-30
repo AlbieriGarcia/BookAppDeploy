@@ -20,7 +20,8 @@
           <div class="card col-md-3" style="width: 18rem;">
                 <div class="card-body">
                   <h5 class="card-title">{{editorial.name}}</h5>
-                  <p class="card-text">{{editorial.description}}</p>
+                  <p class="card-text">{{editorial.telefono}}</p>
+                  <p class="card-text">{{editorial.pais}}</p>
                   <a href="/edit-editorials/{{editorial.id}}?edit=true"class="btn btn-warning">Editar</a>
 
                   <form class="form-delete-editorial form-inline" action="/delete-editorials" method="POST" data-editorial-name="{{editorial.name}}">

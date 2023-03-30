@@ -29,9 +29,10 @@ exports.GetCreateEditorials = (req, res, next) => {
 
 exports.PostCreateEditorials = (req, res, next) => {
   const editorialName = req.body.Name;
-  const description = req.body.Description;
+  const telefono = req.body.Telefono;
+  const pais = req.body.Pais;
 
-  Editorials.create({ name: editorialName, description: description})
+  Editorials.create({ name: editorialName, telefono: telefono, pais: pais})
     .then((result) => {
       res.redirect("/editorials");
     })
@@ -73,10 +74,11 @@ exports.GetEditEditorials = (req, res, next) => {
 
 exports.PostEditEditorials = (req, res, next) => {
     const editorialName = req.body.Name;
-    const description = req.body.Description;
+    const telefono = req.body.Telefono;
+    const pais = req.body.Pais;
     const editorialId = req.body.editorialId ;
 
-    Editorials.update({name: editorialName, description: description}, {where: {id: editorialId }})
+    Editorials.update({name: editorialName, telefono: telefono, pais: pais}, {where: {id: editorialId }})
     .then((result) => {
 
         return res.redirect("/editorials");
