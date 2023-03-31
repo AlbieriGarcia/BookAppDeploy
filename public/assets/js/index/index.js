@@ -1,23 +1,25 @@
 $(document).ready(function(){
-
-  $(".category-item").on("click",function(){
-      var catBook = $(this).attr('category');
-      console.log(catBook);
+  
+ $(".category-item").on("click", function(){
+      var selectedCategories = [];
+      $(".category-item:checked").each(function(){
+        var catBook = $(this).attr("category");
+        selectedCategories.push(catBook);
+      });
+      console.log(selectedCategories);
 
       // ocultar libros
-
       $('.book-item').hide();
 
-      // mostrar categoria seleccionada
-
-      $('.book-item[category="'+catBook+'"]').show();
-  })
-
-  // mostrar todos
-
-  $(".category-item[category='all']").on("click",function(){
-    $('.book-item').show();
-  })
+      // mostrar categorías seleccionadas
+      if (selectedCategories.length == 0) {
+        $('.book-item').show();
+      } else {
+        selectedCategories.forEach(function(catBook){
+          $('.book-item[category="'+catBook+'"]').show();
+        });
+      }
+});
 
   
   // Alertas de eliminación de elementos usando sweetalert2

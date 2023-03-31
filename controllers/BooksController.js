@@ -197,6 +197,8 @@ exports.PostEditBooks = (req, res, next) => {
 
 exports.PostBooksBySearch = (req, res, next) => {
   const search = req.body.Search;
+  const searchMode = false;
+
   Books.findAll({
     include: [{ model: Categories }, { model: Authors }, { model: Editorials }],
     where: { name: search },
@@ -208,6 +210,7 @@ exports.PostBooksBySearch = (req, res, next) => {
         pageTitle: "libros",
         homeActive: true,
         books: books,
+        searchMode: true,
         hasBooks: books.length > 0,
       });
     })

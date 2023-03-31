@@ -7,15 +7,21 @@
   </div>
 </section>
 
+
 <div class="books-container">
-  {{#if hasBooks}}
+{{#if searchMode}}
+{{else}}
+    {{#if hasBooks}}
     <div class="category-list">
-      <a href="#" class="category-item" category="all">Todo</a>
+      <h2 class="text-success">Filtrar</h2>
       {{#each categories as |category|}}
-          <a href="#" class="category-item" category="{{category.name}}">{{category.name}}</a>
-      {{/each}}    
-    </div>    
-  {{/if}}
+        <label>
+          <input type="checkbox" class="category-item" category="{{category.name}}">{{category.name}}
+        </label>
+      {{/each}}
+    </div>
+    {{/if}}
+{{/if}}
 
 <div class="album py-1 books-list">
     <div class="row">
@@ -24,7 +30,7 @@
 
 
         {{#each books as |book|}}
-          <div class="card col-md-3 book-item" category="{{book.category.dataValues.name}}"> 
+          <div class="card col-md-3 book-item" category="{{book.category.dataValues.name}}" style="width: 18rem;"> 
             <img src="{{book.imagePath}}" class="card-img-top img-responsive" alt="{{book.name}}">
             <div class="card-body">
               <h5 class="card-title">{{book.name}}</h5>
