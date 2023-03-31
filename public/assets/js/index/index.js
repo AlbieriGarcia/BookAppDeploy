@@ -1,5 +1,6 @@
 $(document).ready(function(){
   
+  // Filtro
  $(".category-item").on("click", function(){
       var selectedCategories = [];
       $(".category-item:checked").each(function(){
@@ -216,5 +217,3 @@ $(document).ready(function(){
     });
 
 })
-
-//arreglar esto

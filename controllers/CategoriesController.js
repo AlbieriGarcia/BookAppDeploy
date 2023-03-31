@@ -1,3 +1,4 @@
+const Books = require("../models/Books");
 const Categories = require("../models/Categories");
 
 exports.GetCategoriesList = (req, res, next) => {
@@ -30,7 +31,8 @@ exports.GetCreateCategories = (req, res, next) => {
 exports.PostCreateCategories = (req, res, next) => {
   const categoryName = req.body.Name;
   const description = req.body.Description;
-
+  
+ 
   Categories.create({ name: categoryName, description: description})
     .then((result) => {
       res.redirect("/categories");

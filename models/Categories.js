@@ -16,7 +16,7 @@ const Categories = sequelize.define("category", {
     description: {
         type: Sequelize.STRING,
         allowNull: false,
-    },   
+    }, 
 });
 
 module.exports = Categories;
