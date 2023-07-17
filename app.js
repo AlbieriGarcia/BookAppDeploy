@@ -6,8 +6,11 @@ const Books = require("./models/Books");
 const Categories = require("./models/Categories");
 const Authors = require("./models/Authors");
 const Editorials = require("./models/Editorials");
+const User = require("./models/User");
 const multer = require("multer");
 const {v4: uuidv4} = require("uuid");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 const errorController = require("./controllers/ErrorController");
 
@@ -35,6 +38,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public"))); // folder static
 app.use("/images",express.static(path.join(__dirname, "images")));
 
+app.use(session({secret:"anything", resave: true, saveUninitialized: false}));
+
+app.use(flash());
+
+app.use((req, res, next)=>{
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    next();
+});
+
 
 const imageStorage = multer.diskStorage({
     destination: (req,file,cb) =>{
@@ -51,11 +63,13 @@ const booksRouter = require("./routes/books");
 const categoriesRouter = require("./routes/categories");
 const authorsRouter = require("./routes/authors");
 const editorialsRouter = require("./routes/editorials");
+const authRouter = require("./routes/auth");
 
 app.use(booksRouter);
 app.use(categoriesRouter);
 app.use(authorsRouter);
 app.use(editorialsRouter);
+app.use(authRouter);
 
 app.use(errorController.Get404);
 
@@ -67,6 +81,9 @@ Authors.hasMany(Books);
 
 Books.belongsTo(Editorials,{constraint: true,onDelete:"CASCADE"});
 Editorials.hasMany(Books);
+
+Books.belongsTo(User,{constraint: true,onDelete:"CASCADE"});
+User.hasMany(Books);
 
 sequelize.sync()
 .then((result) => {
