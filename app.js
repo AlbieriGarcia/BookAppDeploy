@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const port = process.env.port || 3000;
 const { engine } = require("express-handlebars");
 const sequelize = require("./context/database");
 const Books = require("./models/Books");
@@ -87,7 +88,7 @@ User.hasMany(Books);
 
 sequelize.sync()
 .then((result) => {
-    app.listen(3000);
+    app.listen(port);
 })
 .catch((err) => {
     console.log(err);
