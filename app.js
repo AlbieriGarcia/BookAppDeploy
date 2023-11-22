@@ -1,4 +1,4 @@
-const path = require("node:path");
+const path = require("path");
 const express = require("express");
 const port = process.env.port || 3000;
 const { engine } = require("express-handlebars");
