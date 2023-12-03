@@ -82,7 +82,8 @@
                 </div>
 
                 {{#if editMode}}
-                    <input type="hidden" name="bookId" value="{{book.id}}"> <!-- el aqui tiene el id en singular ojo-->
+                    <input type="hidden" name="bookId" value="{{book.id}}">
+                    <input type="hidden" name="publicId" value="{{book.public_id}}"> <!-- el aqui tiene el id en singular ojo-->
                 {{/if}}
 
 

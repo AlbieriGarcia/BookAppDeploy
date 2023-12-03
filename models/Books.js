@@ -13,7 +13,11 @@ const Books = sequelize.define("book", {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    imagePath: {
+    public_id: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
+    secure_url: {
         type: Sequelize.STRING,
         allowNull: true,
     },

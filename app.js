@@ -8,10 +8,10 @@ const Categories = require("./models/Categories");
 const Authors = require("./models/Authors");
 const Editorials = require("./models/Editorials");
 const User = require("./models/User");
-const multer = require("multer");
 const {v4: uuidv4} = require("uuid");
 const session = require("express-session");
 const flash = require("connect-flash");
+const fileUpload = require("express-fileupload");
 
 const errorController = require("./controllers/ErrorController");
 
@@ -48,17 +48,10 @@ app.use((req, res, next)=>{
     next();
 });
 
-
-const imageStorage = multer.diskStorage({
-    destination: (req,file,cb) =>{
-        cb(null,"images");
-    },
-    filename: (req,file,cb) =>{
-        cb(null,`${uuidv4()}-${file.originalname}`);
-    }
-})
-
-app.use(multer({storage: imageStorage}).single("Image"));
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : './images'
+}));
 
 const booksRouter = require("./routes/books");
 const categoriesRouter = require("./routes/categories");

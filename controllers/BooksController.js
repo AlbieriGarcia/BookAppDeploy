@@ -3,6 +3,8 @@ const Categories = require("../models/Categories");
 const Authors = require("../models/Authors");
 const Editorials = require("../models/Editorials");
 const { where } = require("sequelize");
+const {uploadImage, deleteImage} = require ("../util/cloudinary");
+const fs = require("fs-extra")
 
 exports.GetBooksList = (req, res, next) => {
   Books.findAll({
@@ -66,32 +68,38 @@ exports.GetCreateBooks = (req, res, next) => {
     });
 };
 
-exports.PostCreateBooks = (req, res, next) => {
+exports.PostCreateBooks = async (req, res, next) => {
   const bookName = req.body.Name;
-  const bookImage = req.file; // esta propiedad la agrega multer no http
   const pubDate = req.body.PubDate;
   const bookCategories = req.body.Categories;
   const bookAuthors = req.body.Authors;
   const bookEditorials = req.body.Editorials;
+  let imagePath = '';
 
-  if (!bookImage){            // esto es una validación 
-    return res.redirect("/");
+  // si se envio una imagen ejecuta esta funcion para subir la imagen a cloudinary
+  if (req.files?.Image) {
+    imagePath = await uploadImage(req.files.Image.tempFilePath)
+    console.log(imagePath)
   }
+
+  await fs.unlink(req.files.Image.tempFilePath); // borra la imagen para que no se almacene en la app
 
   Books.create({
     name: bookName,
-    imagePath: "/" + bookImage.path, // este "/" que estoy concatenando es porque la ruta que me tira viene sin
-    categoryId: bookCategories,      // el / atras, viene asi: images/image.jpg
+    public_id: imagePath.public_id,
+    secure_url: imagePath.secure_url,
+    categoryId: bookCategories,      
     authorId: bookAuthors,
     editorialId: bookEditorials,
     pubDate: pubDate,
   })
-    .then((result) => {
-      res.redirect("/");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  .then((result) => {
+    res.redirect("/");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+  
 };
 
 exports.GetEditBooks = (req, res, next) => {
@@ -152,17 +160,23 @@ exports.GetEditBooks = (req, res, next) => {
     });
 };
 
-exports.PostEditBooks = (req, res, next) => {
+exports.PostEditBooks = async (req, res, next) => {
   const bookName = req.body.Name;
-  const bookImage = req.file;
+  const publicId = req.body.publicId;
   const pubDate = req.body.PubDate;
   const bookCategories = req.body.Categories;
   const bookAuthors = req.body.Authors;
   const bookEditorials = req.body.Editorials;
   const bookId = req.body.bookId;
 
+  let imagePath = '';
+
+  if (req.files?.Image) {
+    await deleteImage(publicId);
+  }
+  
   Books.findOne({where: {id: bookId}})
-    .then((result) => {
+    .then( async (result) => {
 
       const book = result.dataValues;
 
@@ -170,12 +184,20 @@ exports.PostEditBooks = (req, res, next) => {
         return res.redirect("/");
       }
 
-      const imagePath = bookImage ? "/" + bookImage.path : book.imagePath; /*esto es como un if 
-                                                                      simplificado  llamado "Operador ternario" */
+      // const imagePath = bookImage ? "/" + bookImage.path : book.imagePath; 
+
+      if (req.files?.Image) {
+        imagePath = await uploadImage(req.files.Image.tempFilePath)
+        console.log(imagePath)
+
+        await fs.unlink(req.files.Image.tempFilePath);
+      }
+      
       Books.update(
         {
           name: bookName,
-          imagePath: imagePath,
+          public_id: imagePath.public_id,
+          secure_url: imagePath.secure_url,
           categoryId: bookCategories,
           authorId: bookAuthors,
           editorialId: bookEditorials,
@@ -219,8 +241,11 @@ exports.PostBooksBySearch = (req, res, next) => {
     });
 };
 
-exports.PostDeleteBooks = (req, res, next) => {
+exports.PostDeleteBooks = async (req, res, next) => {
   const bookId = req.body.bookId;
+  const publicId = req.body.publicId;
+
+  await deleteImage(publicId);
 
   Books.destroy({ where: { id: bookId } })
     .then((result) => {
